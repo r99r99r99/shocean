@@ -319,7 +319,7 @@ public class StationDao extends OracleEngine {
 		stationStatus.setTitle(station.getTitle());
 		stationStatus.setLongitude(station.getLongitude());
 		stationStatus.setLatitude(station.getLatitude());
-		
+		stationStatus.setIfConnIcon(station.getIcon());
 		/*String icon = station.getIcon();
 		//读取站点的链接状态信息
 		StationModel connStatus = new StationModel();
