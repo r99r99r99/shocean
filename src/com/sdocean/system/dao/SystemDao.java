@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.sdocean.common.model.DoubleModel;
 import com.sdocean.common.model.Result;
+import com.sdocean.device.model.DeviceModel;
 import com.sdocean.firstpage.model.SystemModel;
 import com.sdocean.frame.dao.OracleEngine;
 import com.sdocean.frame.util.JsonUtil;
@@ -15,6 +16,7 @@ import com.sdocean.sms.model.SmsLog;
 import com.sdocean.sms.model.SmsMouldModel;
 import com.sdocean.sms.model.SmsSettingModel;
 import com.sdocean.station.model.StationModel;
+import com.sdocean.system.model.DeviceStatusModel;
 import com.sdocean.system.model.SystemWarnModel;
 import com.sdocean.users.model.SysUser;
 
@@ -84,6 +86,26 @@ public class SystemDao extends OracleEngine{
 		sql.append(" where wpid = ").append(stationId).append(" and indicator_code = '").append(indicatorCode).append("'");
 		sql.append(" order by collect_time desc limit 1");
 		result = this.queryObject(sql.toString(), DoubleModel.class);
+		return result;
+	}
+	
+	/*
+	 * 获得站点,某设备的最后一次上报的运行状态
+	 */
+	public DeviceStatusModel getRsStatusByStationDevice(StationModel station,DeviceModel device) {
+		DeviceStatusModel result = new DeviceStatusModel();
+		StringBuffer sql = new StringBuffer("");
+		sql.append(" select a.id,a.collect_time as collecttime,a.wpid as stationid,a.devicecode,");
+		sql.append(" c.name as devicename,a.data, d.value as datavalue");
+		sql.append(" from aiot_metadata_system a, device_catalog c,hb_status d");
+		sql.append(" where a.devicecode = c.code");
+		sql.append(" and a.indicator_code = 'RS'");
+		sql.append(" and d.type = 'devicestatus' ");
+		sql.append(" and CONVERT(a.data, UNSIGNED INTEGER) = CONVERT(d.code, UNSIGNED INTEGER) ");
+		sql.append(" and a.wpid = ").append(station.getId());
+		sql.append(" and a.devicecode = '").append(device.getCode()).append("'");
+		sql.append(" order by a.collect_time desc limit 1");
+		result = this.queryObject(sql.toString(), DeviceStatusModel.class);
 		return result;
 	}
 }

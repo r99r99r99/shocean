@@ -49,6 +49,8 @@ import com.sdocean.page.model.UiColumn;
 import com.sdocean.pollutant.service.PollutantService;
 import com.sdocean.station.model.StationModel;
 import com.sdocean.station.service.StationService;
+import com.sdocean.system.model.DeviceStatusModel;
+import com.sdocean.system.service.SystemService;
 import com.sdocean.users.model.SysUser;
 import com.sdocean.warn.model.Warn4FirstModel;
 import com.sdocean.warn.service.WarnService;
@@ -84,6 +86,8 @@ public class FirstPageAction {
 	private IndicatorService indicatorService;
 	@Autowired
 	private WaterQualityStandardService standardService;
+	@Autowired
+	private SystemService systemService;
 	
 	@RequestMapping("firstPage.do")
 	public ModelAndView firstPage(HttpServletRequest request, 
@@ -163,6 +167,9 @@ public class FirstPageAction {
 		list = dataQueryService.getData4FirstPage(station);
 		//获得当前的水质等级
 		WaterStandard waterStandard = statisQueryService.getWaterStandard(station);
+		//获得该站点的设备状态列表
+		List<DeviceStatusModel> deviceStatusList = systemService.getDeviceRsStatusByStation(station);
+		firstPage.setDeviceStatusList(deviceStatusList);
 		firstPage.setDatas(list);
 		firstPage.setWaterStandard(waterStandard);
 		return JsonUtil.toJson(firstPage);

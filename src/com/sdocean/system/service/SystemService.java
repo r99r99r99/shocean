@@ -9,17 +9,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.sdocean.common.model.Result;
+import com.sdocean.device.dao.DeviceDao;
+import com.sdocean.device.model.DeviceModel;
 import com.sdocean.frame.util.JsonUtil;
-import com.sdocean.page.model.UiColumn;
-import com.sdocean.sms.dao.SmsDao;
-import com.sdocean.sms.model.SmsLog;
-import com.sdocean.sms.model.SmsMouldModel;
-import com.sdocean.sms.model.SmsSettingModel;
 import com.sdocean.station.dao.StationDao;
 import com.sdocean.station.model.StationModel;
-import com.sdocean.station.service.StationService;
 import com.sdocean.system.dao.SystemDao;
+import com.sdocean.system.model.DeviceStatusModel;
 import com.sdocean.system.model.SystemWarnModel;
 import com.sdocean.users.model.SysUser;
 
@@ -31,6 +27,8 @@ public class SystemService {
 	private StationDao stationDao;
 	@Resource
 	private SystemDao systemDao;
+	@Resource
+	private DeviceDao deviceDao;	
 	
 	private static double EARTH_RADIUS = 6378.137;   
 	
@@ -87,5 +85,20 @@ public class SystemService {
 		s = s*1000;
 		
 		return s;    
-	}    
+	} 
+	
+	/*
+	 * 获得站点内设备的状态信息
+	 */
+	public List<DeviceStatusModel> getDeviceRsStatusByStation(StationModel station){
+		List<DeviceStatusModel> list = new ArrayList<>();
+		List<DeviceModel> devices = deviceDao.getDevices4Station(station);
+		for(DeviceModel device:devices) {
+			DeviceStatusModel status = systemDao.getRsStatusByStationDevice(station, device);
+			if(status!=null) {
+				list.add(status);
+			}
+		}
+		return list;
+	}
 }

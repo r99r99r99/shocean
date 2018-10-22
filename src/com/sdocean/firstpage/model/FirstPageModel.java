@@ -6,6 +6,7 @@ import com.sdocean.main.model.MainTenance;
 import com.sdocean.pollutant.model.Pollutant4First;
 import com.sdocean.pollutant.model.PollutantModel;
 import com.sdocean.station.model.StationModel;
+import com.sdocean.system.model.DeviceStatusModel;
 import com.sdocean.warn.model.Warn4FirstModel;
 
 public class FirstPageModel {
@@ -18,7 +19,14 @@ public class FirstPageModel {
 	private List<MainTenance> mains;   //设备下次维护时间
 	private int stationId;
 	private StationModel station;
+	private List<DeviceStatusModel> deviceStatusList;
 	
+	public List<DeviceStatusModel> getDeviceStatusList() {
+		return deviceStatusList;
+	}
+	public void setDeviceStatusList(List<DeviceStatusModel> deviceStatusList) {
+		this.deviceStatusList = deviceStatusList;
+	}
 	public StationModel getStation() {
 		return station;
 	}
