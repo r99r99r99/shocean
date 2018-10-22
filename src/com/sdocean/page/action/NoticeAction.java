@@ -184,4 +184,5 @@ public class NoticeAction {
 		NoticeModel  notice = noticeService.getLastNoReadNoticeListByUser(user);
 		return JsonUtil.toJson(notice);
 	}
+	
 }

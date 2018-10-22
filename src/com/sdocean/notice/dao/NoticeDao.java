@@ -210,6 +210,7 @@ public class NoticeDao extends OracleEngine{
 	
 	/*
 	 * 获取该人员第一条未读通知的记录
+	 * 未读通知标记为已读
 	 */
 	public NoticeModel getLastNoReadNoticeListByUser(SysUser user){
 		NoticeModel notice = new NoticeModel();
@@ -234,6 +235,7 @@ public class NoticeDao extends OracleEngine{
 		}
 		return notice;
 	}
+	
 	
 	/*
 	 * 将该用户的所有未读信息设置为已读
