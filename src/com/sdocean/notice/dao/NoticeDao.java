@@ -250,4 +250,23 @@ public class NoticeDao extends OracleEngine{
 			e.printStackTrace();
 		}
 	}
+	
+	/*
+	 * 将用户列表内的通知设置为已读
+	 */
+	public void saveReadNoticeByUserNoticeList(SysUser user,List<NoticeModel> notices){
+		String noticids = "0";
+		for(NoticeModel notice:notices) {
+			noticids = noticids+","+notice.getId();
+		}
+		StringBuffer sql = new StringBuffer("");
+		sql.append(" update aiot_notice_user set ifread = 1");
+		sql.append(" where userid =").append(user.getId());
+		sql.append(" and noticeid in (").append(noticids).append(")");
+		try {
+			this.execute(sql.toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

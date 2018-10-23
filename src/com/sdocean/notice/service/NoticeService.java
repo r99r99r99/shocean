@@ -115,4 +115,11 @@ public class NoticeService {
 	public NoticeModel getLastNoReadNoticeListByUser(SysUser user){
 		return noticeDao.getLastNoReadNoticeListByUser(user);
 	}
+	
+	/*
+	 * 将用户列表内的通知设置为已读
+	 */
+	public void saveReadNoticeByUserNoticeList(SysUser user,List<NoticeModel> notices){
+		noticeDao.saveReadNoticeByUserNoticeList(user, notices);
+	}
 }

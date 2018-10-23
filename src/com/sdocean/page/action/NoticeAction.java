@@ -102,11 +102,15 @@ public class NoticeAction {
 	public String showNoticeList(@ModelAttribute("model") NoticeModel model,HttpServletRequest request,
 			HttpServletResponse response){
 		PageResult result = new PageResult();
+		//获取用户的人员信息
+		HttpSession session = request.getSession();
+		SysUser user = (SysUser) session.getAttribute("user");
 		//为查询结果增加表头
 		List<UiColumn> cols = noticeService.getCols4NoticeList();
 		result.setCols(cols);
 		List<NoticeModel> rows = noticeService.getNoticeList(model);
 		result.setRows(rows);
+		noticeService.saveReadNoticeByUserNoticeList(user, rows);
 		return JsonUtil.toJson(result);
 	}
 	/*
