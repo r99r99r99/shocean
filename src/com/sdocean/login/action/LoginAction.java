@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.sdocean.common.model.PageStyle;
 import com.sdocean.frame.model.ConfigInfo;
 import com.sdocean.frame.util.JsonUtil;
 import com.sdocean.log.service.SysLoginLogService;
@@ -67,6 +68,9 @@ public class LoginAction {
 	        HttpSession session = request.getSession();
 	        session.setAttribute("user", users);
 	        loginLogService.saveSysLoginLog(request,info);
+	        
+	        PageStyle pageStyle = new PageStyle();
+	        session.setAttribute("pageStyle", pageStyle);
 	        
 	        //读取权限内的平台的列表
 	        List<SysMenu> platList = menuService.getPlatMenu(users);
