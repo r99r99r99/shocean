@@ -17,6 +17,8 @@ import com.sdocean.dataQuery.model.StatisModel;
 import com.sdocean.frame.util.JsonUtil;
 import com.sdocean.page.model.UiColumn;
 import com.sdocean.report.dao.ReportDao;
+import com.sdocean.report.model.ReportCenterModel;
+import com.sdocean.report.model.ReportCenterResult;
 import com.sdocean.report.model.ReportModel;
 import com.sdocean.station.dao.StationDao;
 import com.sdocean.station.model.StationModel;
@@ -63,7 +65,6 @@ public class ReportServer {
 	 * 得到月报查询
 	 */
 	public ReportModel getMonthReport(ReportModel model){
-		System.out.println(JsonUtil.toJson(model));
 		ReportModel report = new ReportModel();
 		//获得站点信息
 		StationModel station = stationDao.getStationById(model.getStationId());
@@ -144,5 +145,25 @@ public class ReportServer {
 	 */
 	public ReportModel getAutoMonthReport(ReportModel model){
 		return reportDao.getAutoMonthReport(model);
+	}
+	
+	/*
+	 * 报表中心查询结果
+	 */
+	public ReportCenterResult getReportCenterResult(ReportCenterModel model) {
+		ReportCenterResult reportCenterResult = new ReportCenterResult();
+		//初始化站点集合列表
+		List<StationModel> stations = new ArrayList<>();
+		//根据传来的sid,获得站点的集合
+		String sid = model.getSid();
+		String beginString = sid.substring(0, 1);
+		String idString = sid.substring(1,sid.length());
+		//判断sid的开头字母
+		if(beginString.equals("S")) {
+			StationModel station = stationDao.getStationById(Integer.parseInt(idString));
+			stations.add(station);
+		}
+		
+		return reportCenterResult;
 	}
 }

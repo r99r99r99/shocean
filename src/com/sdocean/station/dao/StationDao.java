@@ -14,6 +14,7 @@ import com.sdocean.common.model.ZTreeModel;
 import com.sdocean.domain.model.DomainModel;
 import com.sdocean.frame.dao.OracleEngine;
 import com.sdocean.frame.util.JsonUtil;
+import com.sdocean.river.dao.RiverDao;
 import com.sdocean.role.model.RoleModel;
 import com.sdocean.station.model.StationModel;
 import com.sdocean.system.dao.SystemDao;
@@ -418,7 +419,7 @@ public class StationDao extends OracleEngine {
 		//得到该用户权限内的站点的列表
 		List<ZTreeModel> list = new ArrayList<ZTreeModel>();
 		StringBuffer sql = new StringBuffer("");
-		sql.append(" select distinct concat('S',a.id) as id,a.title as name,concat('R',a.region_id) as pid,concat('images/station/icon/',b.icon) as icon");
+		sql.append(" select distinct concat('S',a.id) as id,a.title as name,concat('R',a.region_id) as pid,concat('shenhai/images/station/icon/',b.icon) as icon");
 		sql.append(" from view_role_user_station a, g_station_type b");
 		sql.append(" where userid = ").append(user.getId());
 		sql.append(" and a.stationtype_id = b.id");
@@ -458,5 +459,25 @@ public class StationDao extends OracleEngine {
 		sql.append(" and c.id = d.role_id and d.user_id = ").append(model.getId());
 		stations = this.queryObjectList(sql.toString(), StationModel.class);
 		return stations;
+	}
+	
+	
+	/*
+	 * 根据用户读取用户的站点权限,
+	 * 站点的父类为流域
+	 * 并转化成ztreemodel的形式
+	 */
+	public List<ZTreeModel> getStationTreesByUser4River(SysUser user,String riverId){
+		//得到该用户权限内的站点的列表
+		List<ZTreeModel> list = new ArrayList<ZTreeModel>();
+		StringBuffer sql = new StringBuffer("");
+		sql.append(" select distinct concat('S',a.id) as id,a.title as name,concat('T',c.riverid) as pid,concat('images/station/icon/',b.icon) as icon");
+		sql.append(" from view_role_user_station a, g_station_type b,aiot_river_station c");
+		sql.append(" where userid = ").append(user.getId());
+		sql.append(" and a.id = c.stationid");
+		sql.append(" and concat('T',c.riverid) = '").append(riverId).append("'");
+		sql.append(" and a.stationtype_id = b.id");
+		list = this.queryObjectList(sql.toString(), ZTreeModel.class);
+		return list;
 	}
 }

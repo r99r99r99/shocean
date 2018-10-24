@@ -294,4 +294,19 @@ public class StationAction {
 		List<SelectTree> stationTree = stationService.getStationTreeListByUser(user);
 		return JsonUtil.toJson(stationTree);
 	}
+	
+	/*
+	 * 获得ZTREE展示列表
+	 * 以流域的形式来统计
+	 */
+	@RequestMapping(value="getStationList4ZTreeByRiver.do", method = RequestMethod.POST,produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String getStationList4ZTreeByRiver(HttpServletRequest request,
+			HttpServletResponse response){
+		HttpSession session = request.getSession();
+		SysUser user = (SysUser) session.getAttribute("user");
+		List<ZTreeModel> result = new ArrayList<ZTreeModel>();
+		result = stationService.getStationTreesByUser4River(user);
+		return JsonUtil.toJson(result);
+	}
 }

@@ -64,7 +64,6 @@ public class PageAction {
 		}
 		pageStyle.setMenuStyle(menuStyle);
 		session.setAttribute("pageStyle", pageStyle);
-		System.out.println(JsonUtil.toJson(pageStyle));
 		return JsonUtil.toJson(pageStyle);
 	}
 	

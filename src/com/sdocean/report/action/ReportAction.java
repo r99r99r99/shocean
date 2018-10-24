@@ -2,11 +2,9 @@ package com.sdocean.report.action;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,17 +20,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.sdocean.common.model.Result;
-import com.sdocean.common.model.SelectTree;
-import com.sdocean.dataQuery.model.DataQueryModel;
-import com.sdocean.dictionary.model.PublicModel;
 import com.sdocean.frame.model.ConfigInfo;
 import com.sdocean.frame.util.JsonUtil;
 import com.sdocean.page.model.PageResult;
 import com.sdocean.page.model.UiColumn;
-import com.sdocean.region.service.RegionService;
+import com.sdocean.report.model.ReportCenterModel;
+import com.sdocean.report.model.ReportCenterResult;
 import com.sdocean.report.model.ReportModel;
 import com.sdocean.report.service.ReportServer;
-import com.sdocean.station.model.StationModel;
 import com.sdocean.users.model.SysUser;
 
 @Controller
@@ -208,6 +203,53 @@ public class ReportAction {
 	public String getAutoMonthReport(@ModelAttribute("model") ReportModel model,HttpServletRequest request,
 			HttpServletResponse response){
 		ReportModel result = reportServer.getAutoMonthReport(model);
+		return JsonUtil.toJson(result);
+	}
+	
+	/*
+	 * 跳转到报表中心页面
+	 */
+	@RequestMapping("reportCenter_info.do")
+	public ModelAndView reportCenter_info(HttpServletRequest request,  
+	        HttpServletResponse response)throws Exception{
+		    ModelAndView mav = new ModelAndView("/"+info.getPageVision()+"/report/reportCenter_info");
+	        return mav;  
+	}
+	
+	/*
+	 * 报表中心查询条件初始化
+	 */
+	@RequestMapping(value="reportCenter_init.do", method = RequestMethod.POST,produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String reportCenter_init(HttpServletRequest request,HttpServletResponse response){
+		ReportCenterModel reportCenter = new ReportCenterModel();
+		DateFormat beginDf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	    Calendar calendar = Calendar.getInstance();
+	    calendar.setTime(new Date());
+	    
+	    //设置结束时间
+	    String endDate = beginDf.format(calendar.getTime());
+	    //设置开始时间
+	    calendar.add(Calendar.MONTH, -1);
+	    String beginDate = beginDf.format(calendar.getTime());
+	    
+	    reportCenter.setBeginTime(beginDate);
+	    reportCenter.setEndTime(endDate);
+		//初始化查询口径
+	    reportCenter.setCollectType(3);
+		return JsonUtil.toJson(reportCenter);
+	}
+	
+	/*
+	 * 查询报表中心结果数据
+	 */
+	@RequestMapping(value="showReportCenterList.do", method = RequestMethod.POST,produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String showReportCenterList(@ModelAttribute("model") ReportCenterModel model,HttpServletRequest request,
+			HttpServletResponse response){
+		ReportCenterResult result = new ReportCenterResult();
+		
+		
 		return JsonUtil.toJson(result);
 	}
 }
