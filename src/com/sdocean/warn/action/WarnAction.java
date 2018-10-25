@@ -23,6 +23,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.sdocean.common.model.Result;
 import com.sdocean.dictionary.model.PublicModel;
 import com.sdocean.dictionary.service.PublicService;
+import com.sdocean.firstpage.model.FirstPageModel;
+import com.sdocean.firstpage.model.LastMetaData;
+import com.sdocean.firstpage.model.WaterStandard;
 import com.sdocean.frame.model.ConfigInfo;
 import com.sdocean.frame.util.JsonUtil;
 import com.sdocean.log.service.OperationLogService;
@@ -30,7 +33,9 @@ import com.sdocean.page.model.PageResult;
 import com.sdocean.page.model.UiColumn;
 import com.sdocean.station.model.StationModel;
 import com.sdocean.station.service.StationService;
+import com.sdocean.system.model.DeviceStatusModel;
 import com.sdocean.users.model.SysUser;
+import com.sdocean.warn.model.Warn4FirstModel;
 import com.sdocean.warn.model.WarnModel;
 import com.sdocean.warn.model.WarnValueModel;
 import com.sdocean.warn.service.WarnService;
@@ -217,5 +222,27 @@ public class WarnAction {
 		//保存操作记录
 		logService.saveOperationLog(result, request);
 		return result.getMessage();
+	}
+	
+	@RequestMapping(value="/getWarns4Firstpage.do", produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public String getWarns4Firstpage(@ModelAttribute("model") FirstPageModel model,HttpServletRequest request, HttpServletResponse response){
+		//初始化返回值
+		FirstPageModel firstPage = new FirstPageModel();
+		StationModel station = stationService.getStationById(model.getStationId());
+		//初始化参数,获得当前时间一天前的时间
+		DateFormat beginDf = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(new Date());
+		//默认开始时间为一个月以前
+		calendar.add(Calendar.DATE, -1);
+		String beginDate = beginDf.format(calendar.getTime());
+		//获得预警信息
+		Warn4FirstModel warn = warnService.getWarn4First(Long.parseLong("2"), station, beginDate);
+		//获得告警信息
+		Warn4FirstModel alarm = warnService.getWarn4First(Long.parseLong("1"), station, beginDate);
+		firstPage.setWarn(warn);
+		firstPage.setAlarm(alarm);
+		return JsonUtil.toJson(firstPage);
 	}
 }
