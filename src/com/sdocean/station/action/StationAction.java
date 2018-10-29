@@ -298,7 +298,7 @@ public class StationAction {
 	/*
 	 * 获得ZTREE展示列表
 	 * 以流域的形式来统计
-	 */
+	 
 	@RequestMapping(value="getStationList4ZTreeByRiver.do", method = RequestMethod.POST,produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String getStationList4ZTreeByRiver(HttpServletRequest request,
@@ -308,5 +308,5 @@ public class StationAction {
 		List<ZTreeModel> result = new ArrayList<ZTreeModel>();
 		result = stationService.getStationTreesByUser4River(user);
 		return JsonUtil.toJson(result);
-	}
+	}*/
 }

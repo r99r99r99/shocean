@@ -291,7 +291,7 @@ public class OracleEngine {
 	@SuppressWarnings("unchecked")
 	public Map<String, Object> procQueryMap(String procedure){
 		Map<String, Object> result = new  HashMap<String, Object>();
-		result = this.jdbcTemplate.execute(procedure,  
+		result = (Map<String, Object>) this.jdbcTemplate.execute(procedure,  
                 new CallableStatementCallback() {  
 					@Override
 					public Object doInCallableStatement(
@@ -333,7 +333,7 @@ public class OracleEngine {
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> procQuery(String procedure){
 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>(); 
-		list = this.jdbcTemplate.execute(procedure,  
+		list = (List<Map<String, Object>>) this.jdbcTemplate.execute(procedure,  
                 new CallableStatementCallback() {  
 					@Override
 					public Object doInCallableStatement(

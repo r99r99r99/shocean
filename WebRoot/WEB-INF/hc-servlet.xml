@@ -21,7 +21,7 @@
                 <ref bean="loadUserInterceptor"/>  
             </list>  
         </property>
-	</bean>
+	</bean>	
 	
 	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
         <property name="messageConverters">
@@ -36,6 +36,26 @@
             </list>
         </property>
     </bean>
+    
+    
+    <!-- <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/>  
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">  
+       <property name="messageConverters">  
+           <list>  
+               <ref bean="stringHttpMessageConverter"/>  
+           </list>  
+       </property>  
+   </bean>  
+   
+   <bean id="stringHttpMessageConverter" class="org.springframework.http.converter.StringHttpMessageConverter">  
+       <constructor-arg value="UTF-8"/>  
+       <property name="supportedMediaTypes">  
+           <list>  
+               <value>text/plain;charset=UTF-8</value>  
+           </list>  
+       </property>  
+   </bean>   -->
+  
 
 	<!-- <bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver"

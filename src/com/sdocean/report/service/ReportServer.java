@@ -12,13 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.sdocean.common.model.Result;
 import com.sdocean.dataQuery.dao.StatisQueryDao;
-import com.sdocean.dataQuery.model.StatData;
-import com.sdocean.dataQuery.model.StatisModel;
-import com.sdocean.frame.util.JsonUtil;
 import com.sdocean.page.model.UiColumn;
 import com.sdocean.report.dao.ReportDao;
-import com.sdocean.report.model.ReportCenterModel;
-import com.sdocean.report.model.ReportCenterResult;
 import com.sdocean.report.model.ReportModel;
 import com.sdocean.station.dao.StationDao;
 import com.sdocean.station.model.StationModel;
@@ -149,7 +144,7 @@ public class ReportServer {
 	
 	/*
 	 * 报表中心查询结果
-	 */
+	 
 	public ReportCenterResult getReportCenterResult(ReportCenterModel model) {
 		ReportCenterResult reportCenterResult = new ReportCenterResult();
 		//初始化站点集合列表
@@ -165,5 +160,5 @@ public class ReportServer {
 		}
 		
 		return reportCenterResult;
-	}
+	}*/
 }

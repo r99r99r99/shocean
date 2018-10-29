@@ -1,6 +1,5 @@
 package com.sdocean.report.action;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -24,8 +23,6 @@ import com.sdocean.frame.model.ConfigInfo;
 import com.sdocean.frame.util.JsonUtil;
 import com.sdocean.page.model.PageResult;
 import com.sdocean.page.model.UiColumn;
-import com.sdocean.report.model.ReportCenterModel;
-import com.sdocean.report.model.ReportCenterResult;
 import com.sdocean.report.model.ReportModel;
 import com.sdocean.report.service.ReportServer;
 import com.sdocean.users.model.SysUser;
@@ -215,10 +212,10 @@ public class ReportAction {
 		    ModelAndView mav = new ModelAndView("/"+info.getPageVision()+"/report/reportCenter_info");
 	        return mav;  
 	}
-	
 	/*
+	
 	 * 报表中心查询条件初始化
-	 */
+	 
 	@RequestMapping(value="reportCenter_init.do", method = RequestMethod.POST,produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String reportCenter_init(HttpServletRequest request,HttpServletResponse response){
@@ -238,11 +235,11 @@ public class ReportAction {
 		//初始化查询口径
 	    reportCenter.setCollectType(3);
 		return JsonUtil.toJson(reportCenter);
-	}
+	}*/
 	
 	/*
 	 * 查询报表中心结果数据
-	 */
+	 
 	@RequestMapping(value="showReportCenterList.do", method = RequestMethod.POST,produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String showReportCenterList(@ModelAttribute("model") ReportCenterModel model,HttpServletRequest request,
@@ -251,5 +248,5 @@ public class ReportAction {
 		
 		
 		return JsonUtil.toJson(result);
-	}
+	}*/
 }

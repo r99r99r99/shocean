@@ -16,7 +16,6 @@ import com.sdocean.common.service.ZTreeService;
 import com.sdocean.domain.model.DomainModel;
 import com.sdocean.page.model.UiColumn;
 import com.sdocean.region.dao.RegionDao;
-import com.sdocean.river.dao.RiverDao;
 import com.sdocean.role.model.RoleModel;
 import com.sdocean.station.dao.StationDao;
 import com.sdocean.station.model.StationModel;
@@ -32,9 +31,9 @@ public class StationService {
 	private RegionDao regionDao;
 	@Resource
 	private ZTreeService zTreeService;
-	@Resource
+/*	@Resource
 	private RiverDao riverDao;
-	
+	*/
 	/*
 	 * 为人员管理的查询结果添加表头
 	 */
@@ -310,7 +309,7 @@ public class StationService {
 	/*
 	 * 以树的形式获得用户当前拥有的站点权限的列表
 	 * 以流域来分类
-	 */
+	 
 	public List<ZTreeModel> getStationTreesByUser4River(SysUser user){
 		List<ZTreeModel> result = new ArrayList<>();
 		List<ZTreeModel> rivers = riverDao.getParentRivers();
@@ -322,5 +321,5 @@ public class StationService {
 			}
 		}
 		return result;
-	}
+	}*/
 }
