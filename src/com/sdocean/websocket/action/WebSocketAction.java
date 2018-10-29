@@ -20,11 +20,11 @@ public class WebSocketAction  implements WebSocketConfigurer{
 		// TODO Auto-generated method stub
 		 System.out.println("==========================链接socket");
 	        registry.addHandler(msgSocketHandle(),
-	                "/webSocketServer").
+	                "/webSocketServer.do").
 	                addInterceptors(new WebSocketHandshakeInterceptor());
 	        //浣跨敤socketjs鐨勬敞鍐屾柟娉�
 	        registry.addHandler(msgSocketHandle(),
-	                "/sockjs/webSocketServer").
+	                "/sockjs/webSocketServer.do").
 	                addInterceptors(new WebSocketHandshakeInterceptor())
 	                .withSockJS();
 	}

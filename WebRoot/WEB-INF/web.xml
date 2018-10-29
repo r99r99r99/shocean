@@ -54,10 +54,10 @@
     <servlet-name>hc</servlet-name>
     <url-pattern>*.do</url-pattern>
   </servlet-mapping>
-  <servlet-mapping>
+ <!--  <servlet-mapping>
     <servlet-name>hc</servlet-name>
     <url-pattern>/</url-pattern>
-  </servlet-mapping>
+  </servlet-mapping> -->
   <servlet-mapping>
     <servlet-name>HighChartsServlet</servlet-name>
     <url-pattern>/getHighchartServlet</url-pattern>
