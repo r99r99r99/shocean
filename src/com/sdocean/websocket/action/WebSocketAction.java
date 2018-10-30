@@ -31,7 +31,7 @@ public class WebSocketAction  implements WebSocketConfigurer{
 
 	 /**
     *
-    */
+    */ 
    @Bean(name = "msgSocketHandle")
    public WebSocketHandler msgSocketHandle(){
        return new MsgScoketHandle();

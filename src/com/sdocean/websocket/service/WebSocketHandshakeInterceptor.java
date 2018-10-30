@@ -19,11 +19,11 @@ public class WebSocketHandshakeInterceptor extends HttpSessionHandshakeIntercept
 	@Override
     public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Map<String, Object> attributes) throws Exception {
 		System.out.println("握手前");
-		if (getSession(request) != null) {
+		/*if (getSession(request) != null) {
             ServletServerHttpRequest servletRequest = (ServletServerHttpRequest) request;
             HttpServletRequest httpServletRequest = servletRequest.getServletRequest();
             attributes.put("userId", httpServletRequest.getParameter("userId"));
-        }
+        }*/
         return super.beforeHandshake(request, response, wsHandler, attributes);
     }
 

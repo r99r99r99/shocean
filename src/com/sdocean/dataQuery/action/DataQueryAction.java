@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.socket.TextMessage;
 
 import com.sdocean.common.model.Result;
 import com.sdocean.common.model.SelectTree;
@@ -37,9 +38,9 @@ import com.sdocean.log.service.OperationLogService;
 import com.sdocean.metadata.model.MetadataModel;
 import com.sdocean.page.model.PageResult;
 import com.sdocean.page.model.UiColumn;
-import com.sdocean.role.model.RoleModel;
 import com.sdocean.station.model.StationModel;
 import com.sdocean.users.model.SysUser;
+import com.sdocean.websocket.service.MsgScoketHandle;
 
 @Controller
 public class DataQueryAction {
