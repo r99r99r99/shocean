@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.sdocean.common.model.Result;
 import com.sdocean.common.model.ZTreeModel;
+import com.sdocean.common.service.Md5Service;
 import com.sdocean.frame.dao.OracleEngine;
 import com.sdocean.frame.util.JsonUtil;
 import com.sdocean.role.model.RoleModel;
@@ -227,7 +228,7 @@ public class UsersDao extends OracleEngine {
 		}
 		//验证原密码是否一致
 		StringBuffer checksql = new StringBuffer("");
-		checksql.append("select 1 from sys_user where id = ").append(model.getId()).append(" and password ='").append(model.getPassword()).append("' limit 1");
+		checksql.append("select 1 from sys_user where id = ").append(model.getId()).append(" and password ='").append(Md5Service.MD5(model.getPassword())).append("' limit 1");
 		int check = 0;
 		try {
 			check = this.queryForInt(checksql.toString(), null);
@@ -241,7 +242,7 @@ public class UsersDao extends OracleEngine {
 		}
 		//开始修改密码
 		StringBuffer sql =  new StringBuffer("");
-		sql.append("update sys_user set password = '").append(model.getNewPass()).append("' where id=").append(model.getId());
+		sql.append("update sys_user set password = '").append(Md5Service.MD5(model.getNewPass())).append("' where id=").append(model.getId());
 		int res = 0;
 		try {
 			res = this.update(sql.toString(), null);

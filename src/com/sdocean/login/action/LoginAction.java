@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.sdocean.common.model.PageStyle;
+import com.sdocean.common.service.Md5Service;
 import com.sdocean.frame.model.ConfigInfo;
 import com.sdocean.frame.util.JsonUtil;
 import com.sdocean.log.service.SysLoginLogService;
@@ -43,6 +44,7 @@ public class LoginAction {
 	@Autowired
 	private ConfigInfo info;
 	
+	
 	@RequestMapping("login.do")
 	public ModelAndView login(HttpServletRequest request,  
 	        HttpServletResponse response)throws Exception{
@@ -57,10 +59,12 @@ public class LoginAction {
 	        HttpServletResponse response)throws Exception{
 			String username = request.getParameter("username");
 			String password = request.getParameter("password");
+			
+			//System.out.println(md5Service.MD5(password));
 			//验证用户账号与密码是否对应   
 	        username = username.trim();  
 	        SysUser users = this.usersManager.getUsersByAccount(username);
-	        if(users == null || !users.getPassword().equals(password)) {
+	        if(users == null || !users.getPassword().equals(Md5Service.MD5(password))) {
 	        	String error = "用户名或密码错误,请重新输入" ;
 	        	return new ModelAndView("/"+info.getPageVision()+"/login","error",error);  
 	        } 
